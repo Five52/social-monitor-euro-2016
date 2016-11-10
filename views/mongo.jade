@@ -1,0 +1,8 @@
+extends layout
+
+block content
+    h1= message
+    if docs.length !== 0
+        pre #{docs}
+    else
+        p Pas de documents !
