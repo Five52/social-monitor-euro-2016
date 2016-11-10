@@ -9,14 +9,14 @@ router.get('/', (req, res, next) => {
 });
 
 router.get('/mongo', (req, res, next) => {
-    let url = 'mongodb://localhost:27017/test';
+    let url = 'mongodb://localhost:27017/social-monitor';
     let MongoClient = mongodb.MongoClient;
 
     MongoClient.connect(url, (err, db) => {
         assert.equal(null, err);
         console.log('Connection established to', url);
-        let collection = db.collection('test');
-        db.collection('test').find().toArray((err, docs) => {
+        let collection = db.collection('fbposts');
+        collection.find().toArray((err, docs) => {
             assert.equal(null, err);
             res.render('mongo', {
                 message: 'Données en base',
