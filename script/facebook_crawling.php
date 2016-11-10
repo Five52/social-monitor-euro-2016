@@ -4,27 +4,21 @@ require_once __DIR__ . '/vendor/autoload.php';
 require_once 'parameters.php';
 
 use Facebook\FacebookRequest;
-              
+
+// Connexion à l'API Graph grâce aux ID de l'application
 $fb = new Facebook\Facebook([                                   
     'app_id' => FACEBOOK_APP_ID,
     'app_secret' => FACEBOOK_SECRET_ID,
     'default_graph_version' => 'v2.8',
-]);                                                             
+]);
 
+// On définit un token (sans date de péremption)
 $fb->setDefaultAccessToken(FACEBOOK_APP_ID . "|" . FACEBOOK_SECRET_ID);
 
+// On récupère l'application correspondante
 $fbApp = $fb->getApp();
 
-#try {                                                           
-#    $userNode = $response->getGraphUser();
-#} catch (Facebook\Exceptions\FacebookResponseException $e) {    
-#    echo "GRAPH ERROR :" . $e->getMessage();                    
-#    exit;
-#} catch (Facebook\Exceptions\FacebookSDKException $e) {
-#    echo "FACEBOOK SDK ERROR :". $e->getMessage();
-#    exit;
-#}                                                               
-
+// On envoie la requête souhaitée
 $response = $fb->sendRequest(
 	'GET',
 	'/equipedefrance',
@@ -42,12 +36,11 @@ $response = $fb->sendRequest(
         // Requête des "SAD"
         // 'fields'    => 'posts.until(2016:07:13 23:55:00).since(2016:07:07 16:00:00).limit(50){reactions.type(SAD).limit(0).summary(total_count)}'
         // Requête des "ANGRY"
-        // 'fields'    => 'posts.until(2016:07:13 23:55:00).since(2016:07:07 16:00:00).limit(50){reactions.type(ANGRY).limit(0).summary(total_count)}'
+        'fields'    => 'posts.until(2016:07:13 23:55:00).since(2016:07:07 16:00:00).limit(50){reactions.type(ANGRY).limit(0).summary(total_count)}'
    	)
 );
 
 $response->decodeBody();
-
 $response->getDecodedBody();
 
 // Requête de base
@@ -63,9 +56,11 @@ $response->getDecodedBody();
 // Résultat des "SAD"
 // $fp = fopen('data/equipedefrance_sad.json', 'w');
 // Résultat des "ANGRY"
-// $fp = fopen('data/equipedefrance_angry.json', 'w');
+$fp = fopen('data/equipedefrance_angry.json', 'w');
 
+// On écrit le résultat obtenu dans le fichier défini
 fwrite($fp, json_encode($response->getDecodedBody()));
 
+// On ferme le fichier
 fclose($fp);
 
