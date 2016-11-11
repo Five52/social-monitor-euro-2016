@@ -1,29 +1,21 @@
 var express = require('express');
 var router = express.Router();
-var mongodb = require('mongodb');
-var assert = require('assert');
+const mongodb = require('../src/mongo.js');
 
 /* GET home page. */
-router.get('/', (req, res, next) => {
+router.get('/', (req, res) => {
     res.render('index', { title: 'Express' });
 });
 
-router.get('/mongo', (req, res, next) => {
-    let url = 'mongodb://localhost:27017/test';
-    let MongoClient = mongodb.MongoClient;
-
-    MongoClient.connect(url, (err, db) => {
-        assert.equal(null, err);
-        console.log('Connection established to', url);
-        let collection = db.collection('test');
-        db.collection('test').find().toArray((err, docs) => {
-            assert.equal(null, err);
-            res.render('mongo', {
-                message: 'Données en base',
-                docs: JSON.stringify(docs)
-            });
+router.get('/insert', (req, res) => {
+    const basePosts = require('../script/data/equipedefrance_base.json');
+    console.log(basePosts.posts.data);
+    let collection = mongodb.instance.collection('fbposts');
+    collection.insert(basePosts.posts.data, () => {
+        res.render('insert', {
+            message: basePosts.posts.data.length + ' posts insérés',
         });
     });
-})
+});
 
 module.exports = router;
