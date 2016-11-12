@@ -8,12 +8,16 @@ router.get('/', (req, res) => {
 });
 
 router.get('/insert', (req, res) => {
-    const basePosts = require('../script/data/equipedefrance_base.json');
-    console.log(basePosts.posts.data);
-    let collection = mongodb.instance.collection('fbposts');
-    collection.insert(basePosts.posts.data, () => {
-        res.render('insert', {
-            message: basePosts.posts.data.length + ' posts insérés',
+    mongodb.insertPosts().then((nbPosts) => {
+        return mongodb.insertReactions();
+    }).then(() => {
+        res.end('Données ajoutées !');
+    }).catch((err) => {
+        res.render('error', {
+            error: {
+                status: 500,
+                stack: err
+            }
         });
     });
 });
