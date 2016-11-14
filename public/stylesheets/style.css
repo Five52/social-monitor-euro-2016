@@ -3,6 +3,27 @@ body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
+h1 {
+    text-align: center;
+}
+
+.content {
+    display: flex;
+    flex-flow: row nowrap;
+    width: 50%;
+}
+
+.content>div, .content>svg {
+    margin: auto;
+}
+
 a {
   color: #00B7FF;
 }
+
+.code p {
+    font-size: 16px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+

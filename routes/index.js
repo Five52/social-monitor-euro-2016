@@ -105,33 +105,7 @@ router.get('/sample/sentiments', (req, res) => {
 });
 
 router.get('/post', (req, res) => {
-    const requestData = require('querystring').stringify({
-        text: "great"
-    });
-    const requestOptions = {
-        hostname: 'text-processing.com',
-        path: '/api/sentiment/',
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Content-Length': Buffer.byteLength(requestData)
-        }
-    };
-    const request = http.request(requestOptions, (response) => {
-        response.setEncoding('utf8');
-        response.on('data', (chunk) => {
-            console.log('Body: ' + chunk);
-        });
-        response.on('end', () => {
-            console.log('No more data');
-        })
-    });
-    request.on('error', (err) => {
-        console.log('Problem' + err.message);
-    })
-    request.write(requestData);
-    request.end();
-    res.end('OK');
+    res.render('data', {title: 'Réactions au post'});
 });
 
 module.exports = router;
