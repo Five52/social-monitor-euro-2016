@@ -52,60 +52,62 @@ router.get('/sample/reactions', (req, res) => {
 });
 
 router.get('/sample/sentiments', (req, res) => {
-    res.json({
-        "message": "Après Samuel Umtiti hier, Lucas Digne vient de signer un contrat de 5 ans avec le FC Barcelona ! 👊 #FiersdetreBleu",
-        "id": "112215632152510_1247865825254146",
-        "date": "2016-07-13T12:58:06+0000",
-        "comments": {
-            "data": [
-                {
-                    "message": "BLABLA",
-                    "id": 1,
-                    "sentiments": {
-                        "neg": 0.4561283512,
-                        "neutral": 0.1242132,
-                        "pos": 0.3546132
-                    }
-                }, {
-                    "message": "BLEBLE",
-                    "id": 2,
-                    "sentiments": {
-                        "neg": 0.45632165,
-                        "neutral": 0.123456,
-                        "pos": 0.785412
-                    }
-                }, {
-                    "message": "BLIBLI",
-                    "id": 3,
-                    "sentiments": {
-                        "neg": 0.012132,
-                        "neutral": 0.98798,
-                        "pos": 0.123
-                    }
-                }, {
-                    "message": "BLOBLO",
-                    "id": 4,
-                    "sentiments": {
-                        "neg": 0.7441223,
-                        "neutral": 0.23485,
-                        "pos": 0.4523
-                    }
-                }, {
-                    "message": "BLUBLU",
-                    "id": 5,
-                    "sentiments": {
-                        "neg": 0.12311,
-                        "neutral": 0.4541212,
-                        "pos": 0.98567845
-                    }
-                },
-            ]
-        }
-    });
+    res.json([
+        {
+            "message": "Après Samuel Umtiti hier, Lucas Digne vient de signer un contrat de 5 ans avec le FC Barcelona ! 👊 #FiersdetreBleu",
+            "id": "112215632152510_1247865825254146",
+            "date": "2016-07-13T12:58:06+0000",
+            "comments": {
+                "data": [
+                    {
+                        "message": "BLABLA",
+                        "id": 1,
+                        "sentiments": {
+                            "neg": 0.4561283512,
+                            "neutral": 0.1242132,
+                            "pos": 0.3546132
+                        }
+                    }, {
+                        "message": "BLEBLE",
+                        "id": 2,
+                        "sentiments": {
+                            "neg": 0.45632165,
+                            "neutral": 0.123456,
+                            "pos": 0.785412
+                        }
+                    }, {
+                        "message": "BLIBLI",
+                        "id": 3,
+                        "sentiments": {
+                            "neg": 0.012132,
+                            "neutral": 0.98798,
+                            "pos": 0.123
+                        }
+                    }, {
+                        "message": "BLOBLO",
+                        "id": 4,
+                        "sentiments": {
+                            "neg": 0.7441223,
+                            "neutral": 0.23485,
+                            "pos": 0.4523
+                        }
+                    }, {
+                        "message": "BLUBLU",
+                        "id": 5,
+                        "sentiments": {
+                            "neg": 0.12311,
+                            "neutral": 0.4541212,
+                            "pos": 0.98567845
+                        }
+                    },
+                ]
+            }
+        },
+    ]);
 });
 
 router.get('/post', (req, res) => {
-    res.render('data', {title: 'Réactions au post'});
+    res.render('data', {title: 'Post reactions'});
 });
 
 module.exports = router;

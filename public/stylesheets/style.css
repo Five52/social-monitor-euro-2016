@@ -7,13 +7,24 @@ h1 {
     text-align: center;
 }
 
-.content {
-    display: flex;
-    flex-flow: row nowrap;
-    width: 50%;
+.header {
+    margin-top: 50px;
+    text-align: center;
 }
 
-.content>div, .content>svg {
+.global-content {
+    display: flex;
+    flex-flow: row nowrap;
+    width: 100%;
+}
+
+.reactions-content, .sentiments-content {
+    display: flex;
+    flex-flow: row nowrap;
+    width: 100%;
+}
+
+.reactions-content>div, .reactions-content>svg, .sentiments-content>div, .sentiments-content>svg {
     margin: auto;
 }
 
@@ -21,7 +32,7 @@ a {
   color: #00B7FF;
 }
 
-.code p {
+.reactions-code p, .sentiments-code p {
     font-size: 16px;
     text-transform: uppercase;
     font-weight: bold;
