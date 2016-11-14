@@ -26,6 +26,32 @@ router.get('/insert', (req, res) => {
 });
 
 router.get('/sample/reactions', (req, res) => {
+    res.json([
+        {
+            "message": "Après Samuel Umtiti hier, Lucas Digne vient de signer un contrat de 5 ans avec le FC Barcelona ! 👊 #FiersdetreBles",
+            "id": "112215632152510_1247865825254146",
+            "date": "2016-07-13T12:58:06+0000",
+            "angry": 35,
+            "haha": 234,
+            "like": 20088,
+            "love": 512,
+            "sad": 14,
+            "wow": 90
+        },{
+            "message" : "On se sera bien marré quand même durant cet Euro ! Grâce à votre créativité, on aura pu voir quelques petites pépites comme ce remix pour Moussa Sissoko 🎤😂 #FiersdetreBleus",
+            "id" : "112215632152510_1247485368625525",
+            "date" : "2016-07-13T07:24:01+0000",
+            "angry" : 10,
+            "haha" : 1423,
+            "like" : 31682,
+            "love" : 1637,
+            "sad" : 7,
+            "wow" : 33
+        }
+    ]);
+});
+
+router.get('/sample/sentiments', (req, res) => {
     res.json({
         "message": "Après Samuel Umtiti hier, Lucas Digne vient de signer un contrat de 5 ans avec le FC Barcelona ! 👊 #FiersdetreBleu",
         "id": "112215632152510_1247865825254146",
@@ -76,20 +102,6 @@ router.get('/sample/reactions', (req, res) => {
             ]
         }
     });
-});
-
-router.get('/sample/sentiments', (req, res) => {
-    res.json([
-        {
-            "message": "Après Samuel Umtiti hier, Lucas Digne vient de signer un contrat de 5 ans avec le FC Barcelona ! 👊 #FiersdetreBleu",
-            "id": "112215632152510_1247865825254146",
-            "date": "2016-07-13T12:58:06+0000",
-        }, {
-            "message" : "On se sera bien marré quand même durant cet Euro ! Grâce à votre créativité, on aura pu voir quelques petites pépites comme ce remix pour Moussa Sissoko 🎤😂 #FiersdetreBleus",
-            "id" : "112215632152510_1247485368625525",
-            "date" : "2016-07-13T07:24:01+0000",
-        }
-    ]);
 });
 
 router.get('/post', (req, res) => {
