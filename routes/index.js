@@ -3,7 +3,9 @@ var router = express.Router();
 const mongodb = require('../src/mongo.js');
 
 /* GET home page. */
-router.get('/', (req, res) => { mongodb.getSentiment('great').then((data) => { console.log(data);
+router.get('/', (req, res) => {
+    mongodb.getSentiment('great').then((data) => {
+        console.log(data);
         res.render('index', { title: 'Express' });
     }).catch((err) => {
         console.error(err);
@@ -14,6 +16,8 @@ router.get('/insert', (req, res) => {
     mongodb.insertPosts().then((nbPosts) => {
         return mongodb.insertReactions();
     }).then(() => {
+        return mongodb.deleteEmptyComments();
+    }).then(() => {
         res.end('Données ajoutées !');
     }).catch((err) => {
         res.render('error', {
@@ -22,6 +26,12 @@ router.get('/insert', (req, res) => {
                 stack: err
             }
         });
+    });
+});
+
+router.get('/add-sentiments', (req, res) => {
+    mongodb.insertSentiments().then(() => {
+        res.end('Sentiments ajoutés');
     });
 });
 
