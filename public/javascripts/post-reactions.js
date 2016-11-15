@@ -24,42 +24,10 @@ var header = d3.select("body").append("section")
 var globalContent = d3.select("body").append("section")
         .attr("class", "global-content");
 
-// Reactions content creation (for its donuts + legends)
-var reactionsContent = globalContent.append("div")
-        .attr("class", "reactions-content");
-
-// Div to put the color code of reactions
-var reactionsCode = reactionsContent.append("div")
-    .attr("class", "reactions-code");
-
-// Append of all color code for each reaction
-reactionsCode.append("p")
-    .text("love")
-    .style("color", "#F95AD9");
-reactionsCode.append("p")
-    .text("wow")
-    .style("color", "#02CD09");
-reactionsCode.append("p")
-    .text("haha")
-    .style("color", "#EFE015");
-reactionsCode.append("p")
-    .text("sad")
-    .style("color", "#3378ED");
-reactionsCode.append("p")
-    .text("angry")
-    .style("color", "#CE0000");
-
-// Creation of the global SVG for reactions
-var svg = reactionsContent.append("svg")
-        .attr("width", width)
-        .attr("height", height)
-    .append("g")
-        .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
-
 // JSON for reactions on the post
-d3.json("sample/reactions", function(error, data) {
+console.log(post);
+d3.json('/api/post/'+post[0].id, function(error, data) {
     if (error) throw error;
-
     // Post date + message print in header
     var postMessage = data[0].message;
     var postDate = toDateFormat(data[0].date);
@@ -88,6 +56,38 @@ d3.json("sample/reactions", function(error, data) {
         }
     }
     
+    // Reactions content creation (for its donuts + legends)
+    var reactionsContent = globalContent.append("div")
+            .attr("class", "reactions-content");
+
+    // Div to put the color code of reactions
+    var reactionsCode = reactionsContent.append("div")
+        .attr("class", "reactions-code");
+
+    // Append of all color code for each reaction
+    reactionsCode.append("p")
+        .text("love")
+        .style("color", "#F95AD9");
+    reactionsCode.append("p")
+        .text("wow")
+        .style("color", "#02CD09");
+    reactionsCode.append("p")
+        .text("haha")
+        .style("color", "#EFE015");
+    reactionsCode.append("p")
+        .text("sad")
+        .style("color", "#3378ED");
+    reactionsCode.append("p")
+        .text("angry")
+        .style("color", "#CE0000");
+
+    // Creation of the global SVG for reactions
+    var svg = reactionsContent.append("svg")
+            .attr("width", width)
+            .attr("height", height)
+        .append("g")
+            .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
     // Creation of the reactions donut
     let g = svg.selectAll(".arc")
         .data(pie(reactionValues))
@@ -101,38 +101,8 @@ d3.json("sample/reactions", function(error, data) {
         
 });
 
-// Color of each sentiment
-var sentimentColor = d3.scale.ordinal()
-    // green (pos), yellow (neutral), red (neg)
-    .range(['#02CD09', '#EFE015', '#CE0000']);
-
-// Sentiments content creation (for its donut + legends)
-var sentimentsContent = globalContent.append("div")
-        .attr("class", "sentiments-content");
-
-// Div to put the color code of sentiments
-var sentimentsCode = sentimentsContent.append("div")
-    .attr("class", "sentiments-code");
-
-// Append of all color code for each sentiment
-sentimentsCode.append("p")
-    .text("positive")
-    .style("color", "#02CD09");
-sentimentsCode.append("p")
-    .text("neutral")
-    .style("color", "#EFE015");
-sentimentsCode.append("p")
-    .text("negative")
-    .style("color", "#CE0000");
-
-var svg2 = sentimentsContent.append("svg")
-        .attr("width", width)
-        .attr("height", height)
-    .append("g")
-        .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
-
 // JSON pour les réaction dans les commentaires du post
-d3.json("sample/sentiments", function(error, data) {
+d3.json('/api/post/'+post[0].id, function(error, data) {
     if (error) throw error;
 
     // To avoid to rewrite this too much
@@ -145,9 +115,12 @@ d3.json("sample/sentiments", function(error, data) {
     
     // Incrementation of sentiments sums
     for (let i = 0; i < dataComments.length; i++) {
-            sumPos += dataComments[i].sentiments.pos;
-            sumNeutral += dataComments[i].sentiments.neutral;
-            sumNeg += dataComments[i].sentiments.neg;
+        if (typeof dataComments[i].sentiments === 'undefined') {
+            return;
+        }
+        sumPos += dataComments[i].sentiments.pos;
+        sumNeutral += dataComments[i].sentiments.neutral;
+        sumNeg += dataComments[i].sentiments.neg;
     }
     
     const sentiments = {
@@ -169,6 +142,35 @@ d3.json("sample/sentiments", function(error, data) {
         }
     }
 
+    // Color of each sentiment
+    var sentimentColor = d3.scale.ordinal()
+        // green (pos), yellow (neutral), red (neg)
+        .range(['#02CD09', '#EFE015', '#CE0000']);
+
+    // Sentiments content creation (for its donut + legends)
+    var sentimentsContent = globalContent.append("div")
+            .attr("class", "sentiments-content");
+
+    // Div to put the color code of sentiments
+    var sentimentsCode = sentimentsContent.append("div")
+        .attr("class", "sentiments-code");
+
+    // Append of all color code for each sentiment
+    sentimentsCode.append("p")
+        .text("positive")
+        .style("color", "#02CD09");
+    sentimentsCode.append("p")
+        .text("neutral")
+        .style("color", "#EFE015");
+    sentimentsCode.append("p")
+        .text("negative")
+        .style("color", "#CE0000");
+
+    var svg2 = sentimentsContent.append("svg")
+            .attr("width", width)
+            .attr("height", height)
+        .append("g")
+            .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
     // Creation of the sentiments donut
     let g = svg2.selectAll(".arc")
         .data(pie(sentimentValues))
