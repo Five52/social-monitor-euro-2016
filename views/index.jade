@@ -1,5 +1,17 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+    -function prettyDate(date) {
+        -let formatedString = date.split('T');
+        -let formatedDate = formatedString[0].split('-');
+        -let formatedTime = formatedString[1].split('+');
+
+        -let newDate = formatedDate[2] + '-' + formatedDate[1] + '-' + formatedDate[0];
+
+        -return newDate + ' at ' + formatedTime[0];
+    -}
+    ul.posts
+        for post in posts
+            li: a(href="/post/#{post.id}")
+                span.date= prettyDate(post.date)
+                span.teaser #{post.message.substring(0, 80)}...

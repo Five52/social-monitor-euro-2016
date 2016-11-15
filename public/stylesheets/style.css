@@ -1,40 +1,109 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
 body {
-  padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
+header {
+    padding: 10px;
+    box-shadow: 0px 5px 5px lightgray;
+    margin-bottom: 20px;
+    background-color: rgb(51, 120, 137);
+    color: white;
+}
 h1 {
     text-align: center;
+    text-shadow: 0px 1px 2px black;
 }
 
-.header {
+h2 {
     margin-top: 50px;
+    padding: 0 30px;
     text-align: center;
+    color: rgb(51, 120, 137);
 }
 
 .global-content {
     display: flex;
-    flex-flow: row nowrap;
+    flex-flow: row wrap;
     width: 100%;
+    padding: 30px;
 }
 
 .reactions-content, .sentiments-content {
     display: flex;
     flex-flow: row nowrap;
-    width: 100%;
+    flex: 1;
 }
 
 .reactions-content>div, .reactions-content>svg, .sentiments-content>div, .sentiments-content>svg {
     margin: auto;
 }
 
-a {
-  color: #00B7FF;
-}
-
 .reactions-code p, .sentiments-code p {
     font-size: 16px;
     text-transform: uppercase;
     font-weight: bold;
+    text-align: center;
 }
 
+ul.posts {
+    list-style: none;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+}
+
+ul.posts li {
+    width: 200px;
+    margin: 15px 10px;
+    box-shadow: 0px 5px 5px lightgray;
+    text-align: center;
+    transition: 0.5s;
+}
+
+ul.posts li:hover {
+    margin: 10px 10px 20px;
+    box-shadow: 0px 5px 5px gray;
+}
+
+ul.posts li a {
+    display: flex;
+    flex-flow: column;
+    width: 100%;
+    height: 100%;
+}
+a:link, a:visited {
+    color: black;
+    text-decoration: none;
+}
+
+ul.posts li .date {
+    background-color: #00B7FF;
+    color: white;
+    padding: 7px;
+    font-weight: bold;
+    text-shadow: 0px 1px 2px rgb(51, 120, 137);
+}
+
+ul.posts li .teaser {
+    padding: 7px;
+    border: 1px solid lightgray;
+    border-top: none;
+    flex: 1;
+}
+
+#back a {
+    padding: 10px;
+    color: rgb(51, 120, 137);
+    transition: 0.5s;
+    font-weight: 550;
+}
+
+#back a:hover {
+    color: black;
+}

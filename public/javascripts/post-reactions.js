@@ -17,22 +17,19 @@ var pie = d3.layout.pie()
     .value(function(d) { return d; });
 
 // Header section, to print the post message
-var header = d3.select("body").append("section")
-        .attr("class", "header");
+var header = d3.select("body").append("h2")
 
 // Global content creation
 var globalContent = d3.select("body").append("section")
         .attr("class", "global-content");
 
 // JSON for reactions on the post
-console.log(post);
 d3.json('/api/post/'+post[0].id, function(error, data) {
     if (error) throw error;
     // Post date + message print in header
     var postMessage = data[0].message;
     var postDate = toDateFormat(data[0].date);
-    var message = header.append("p")
-        .text(postDate + " - " + postMessage);
+    var message = header.text(postDate + " - " + postMessage);
    
     // Storage of all reactions of the post
     const reactions = {
@@ -66,19 +63,19 @@ d3.json('/api/post/'+post[0].id, function(error, data) {
 
     // Append of all color code for each reaction
     reactionsCode.append("p")
-        .text("love")
+        .text("love: " + reactions.love)
         .style("color", "#F95AD9");
     reactionsCode.append("p")
-        .text("wow")
+        .text("wow: " + reactions.wow)
         .style("color", "#02CD09");
     reactionsCode.append("p")
-        .text("haha")
+        .text("haha: " + reactions.haha)
         .style("color", "#EFE015");
     reactionsCode.append("p")
-        .text("sad")
+        .text("sad: " + reactions.sad)
         .style("color", "#3378ED");
     reactionsCode.append("p")
-        .text("angry")
+        .text("angry: " + reactions.angry)
         .style("color", "#CE0000");
 
     // Creation of the global SVG for reactions
@@ -156,14 +153,21 @@ d3.json('/api/post/'+post[0].id, function(error, data) {
         .attr("class", "sentiments-code");
 
     // Append of all color code for each sentiment
+    let totalSum = sentiments.pos + sentiments.neutral + sentiments.neg;
+    let pcPos = Math.round(sentiments.pos / totalSum * 100 * 100) / 100;
+    let pcNeutral = Math.round(sentiments.neutral / totalSum * 100 * 100) / 100;
+    let pcNeg = Math.round(sentiments.neg / totalSum * 100 * 100) / 100;
+
     sentimentsCode.append("p")
-        .text("positive")
+        .text("positive: " + pcPos + "%")
         .style("color", "#02CD09");
+
     sentimentsCode.append("p")
-        .text("neutral")
+        .text("neutral: " + pcNeutral + "%")
         .style("color", "#EFE015");
+
     sentimentsCode.append("p")
-        .text("negative")
+        .text("negative: " + pcNeg + "%")
         .style("color", "#CE0000");
 
     var svg2 = sentimentsContent.append("svg")

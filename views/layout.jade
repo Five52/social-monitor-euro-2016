@@ -1,7 +1,10 @@
 doctype html
 html
-  head
-    title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
-  body
-    block content
+    head
+        title #{title} - Social Monitor Euro 2016
+        block stylesheets
+            include partials/stylesheets
+    body
+        block header
+            include partials/header
+        block content

@@ -134,6 +134,32 @@ const obj = {
                 resolve();
             })
         });
+    },
+    getPost(idPost) {
+        return new Promise((resolve, reject) => {
+            const collection = this.instance.collection('fbposts');
+            collection.find({id: idPost}).limit(1).toArray((err, post) => {
+                if (err) {
+                    reject(err);
+                }
+                if (!post) {
+                    reject();
+                }
+
+                resolve(post);
+            });
+        });
+    },
+    getPosts() {
+        return new Promise((resolve, reject) => {
+            const collection = this.instance.collection('fbposts');
+            collection.find({}).toArray((err, posts) => {
+                if (err) {
+                    reject(err);
+                }
+                resolve(posts);
+            });
+        });
     }
 }
 
